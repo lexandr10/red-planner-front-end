@@ -1,4 +1,4 @@
-import { axiosClassic } from "@/api/interceptors";
+import {  axiosWithAuth } from "@/api/interceptors";
 import { IUser, TypeUserForm } from "@/types/auth.types";
 
 
@@ -14,13 +14,13 @@ export class UserService {
     BASE_URL = 'user/profile'
 
     async getUser() {
-        const responce = await axiosClassic.get<IUserResponce>(this.BASE_URL)
+        const responce = await axiosWithAuth.get<IUserResponce>(this.BASE_URL)
         return responce.data
 
     }
 
     async updateUser(data: TypeUserForm) {
-        const responce = await axiosClassic.put(this.BASE_URL, data)
+        const responce = await axiosWithAuth.put(this.BASE_URL, data)
         return responce.data
     }
 }
