@@ -1,4 +1,4 @@
-import { TypesRoot } from "./root.types"
+import type { TypesRoot } from "./root.types"
 
 export enum EnumTaskPriority {
     low = "low",
@@ -13,4 +13,4 @@ export interface ITaskResponse extends TypesRoot {
     isCompleted: boolean
 }
 
-export type TypeTaskFormState = Partial<Omit<ITaskResponse, "id" | "updateAt">>
+export type TypeTaskFormState = Partial<Omit<ITaskResponse, "id" | "updatedAt">>

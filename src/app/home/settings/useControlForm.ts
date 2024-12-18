@@ -1,3 +1,4 @@
+'use client'
 import { useProfile } from "@/hooks/useProfile"
 import { TypeUserForm } from "@/types/auth.types"
 import { useEffect } from "react"

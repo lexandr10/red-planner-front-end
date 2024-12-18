@@ -1,3 +1,4 @@
+'use client'
 import { userService } from "@/services/user.service"
 import { TypeUserForm } from "@/types/auth.types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"

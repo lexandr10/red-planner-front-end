@@ -1,5 +1,5 @@
 export interface TypesRoot {
     id: string,
-    createAt?: string,
-    updateAt?: string
+    createdAt?: string,
+    updatedAt?: string
 } 

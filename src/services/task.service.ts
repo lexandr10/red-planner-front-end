@@ -6,7 +6,7 @@ class TaskService {
     private BASE_URL = '/user/task'
 
     async getTask()  {
-        const res = await axiosWithAuth.get<ITaskResponse>(this.BASE_URL)
+        const res = await axiosWithAuth.get<ITaskResponse[]>(this.BASE_URL)
         
         return res
     }

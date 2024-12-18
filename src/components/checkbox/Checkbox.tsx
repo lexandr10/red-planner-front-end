@@ -1,6 +1,7 @@
 const Checkbox = (props: {
     id?: string,
     extra?: string
+    [x: string]: any
 
 }) => {
     const { id, extra, ...rest } = props
