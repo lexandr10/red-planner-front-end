@@ -7,7 +7,6 @@ import { FILTERS } from './column.data'
 dayjs.extend(isSameOrAfter)
 dayjs.extend(isSameOrBefore)
 
-
 export const filterTasks = (
 	tasks: ITaskResponse[] | undefined,
 	value: string
@@ -40,6 +39,7 @@ export const filterTasks = (
 			return tasks?.filter(
 				item =>
 					dayjs(item.createdAt).isAfter(FILTERS['on-this-week']) &&
+					!dayjs(item.createdAt).isSame(FILTERS.tomorrow) &&
 					dayjs(item.createdAt).isSameOrBefore(FILTERS['on-next-week']) &&
 					!item.isCompleted
 			)
