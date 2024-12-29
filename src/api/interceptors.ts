@@ -5,7 +5,7 @@ import { authService } from "@/services/auth.service"
 
 
 const options: CreateAxiosDefaults = { 
-    baseURL: 'http://localhost:3001/api',
+    baseURL: 'https://red-planner-back-end.onrender.com/api',
     headers: {
         "Content-Type": "application/json"
     },
