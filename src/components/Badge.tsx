@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 interface IBage {
     className?: string
-    variant?: 'gray' | 'high' | 'medium' | 'low'
+    variant?: string
     style?: CSSProperties
 }
 
@@ -17,7 +17,7 @@ const variantStyles = {
 };
 
 const Badge = ({children, className, variant = 'gray', style}: PropsWithChildren<IBage>) => {
-    return <span style={style} className={clsx(baseStyles, variantStyles[variant], className)}>
+    return <span style={style} className={clsx(baseStyles, variantStyles[variant as 'gray' | 'high' | 'medium' | 'low'], className)}>
       {children}
     </span>
 }

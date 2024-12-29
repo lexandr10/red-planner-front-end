@@ -13,6 +13,7 @@ const ListAddRowInput = ({ setItems, filterDate }: IListAddRowInput) => {
     const addRow = () => {
         setItems(prev => {
             if (!prev) return
+            
             return [...prev, {
                 id: '',
                 name: '',

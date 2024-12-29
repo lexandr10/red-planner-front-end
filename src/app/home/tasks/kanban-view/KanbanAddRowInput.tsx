@@ -13,6 +13,7 @@ const KanbanAddRowInput = ({ setItems, filterDate }: IKanbanAddRowInput) => {
     const addRow = () => {
         setItems(prev => {
             if (!prev) return
+            
             return [...prev, {
                 id: '',
                 name: '',

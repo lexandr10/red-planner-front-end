@@ -4,14 +4,14 @@ import Badge from "../Badge"
 import { X } from "lucide-react"
 
 export interface IOption {
-    value: 'high' | 'medium' | 'low'
+    value: string
     label: string
 }
 
 interface ISingleSelect {
     data: IOption[]
     onChange: (value: string) => void
-    value: 'high' | 'medium' | 'low'
+    value: string
     isColorSelect?: boolean
 }
 
