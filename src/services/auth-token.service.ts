@@ -13,8 +13,11 @@ export const getAccessToken = () => {
 
 export const saveAccessToken = (accessToken: string) => {
     Cookie.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-        domain: 'localhost',
-        sameSite: "strict",
+        domain: process.env.NODE_ENV === 'production' 
+            ? '.red-planner-front-end.onrender.com'
+            : 'localhost',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: process.env.NODE_ENV === 'production',
         expires: 1
 } )
 }
