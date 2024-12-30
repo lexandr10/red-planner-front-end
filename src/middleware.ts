@@ -7,6 +7,8 @@ import { DASHBOARD_PAGES } from "./config/pages-url.config";
      
      const refreshToken = cookies.get(EnumTokens.REFRESH_TOKEN)?.value
      const isAuthPage = url.includes('/auth')
+     console.log(cookies)
+  
      
      if (isAuthPage && refreshToken) {
          return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
