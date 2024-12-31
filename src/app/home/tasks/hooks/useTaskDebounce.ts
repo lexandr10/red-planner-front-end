@@ -7,39 +7,41 @@ import { useUpdateTasks } from "./useUpdateTasks"
 import { TypeTaskFormState } from "@/types/task.type"
 
 interface IUseTaskDebounce {
-    watch: UseFormWatch<TypeTaskFormState>
-    itemId: string
-
+    itemId?: string
 }
 
-export const useTaskDebounce = ({watch, itemId}: IUseTaskDebounce) => {
+export const useTaskHandler = ({ itemId }: IUseTaskDebounce) => {
+  const { createTask } = useCreateTask()
+  const { updateTasks } = useUpdateTasks()
 
-    const { createTask } = useCreateTask()
-    const {updateTasks} = useUpdateTasks()
+  const saveTask = useCallback(
+    debounce((formData: TypeTaskFormState) => {
+      if (itemId) {
+        updateTasks({ id: itemId, data: formData })
+      } else {
+        createTask(formData)
+      }
+    }, 444), 
+    [itemId, createTask, updateTasks]
+  )
 
-    const debouncedCreateTask = useCallback(debounce((formdata: TypeTaskFormState) => {
-        createTask(formdata)
-    }, 444), [])
+  
+  const handleBlur = useCallback(
+    (formData: TypeTaskFormState) => {
+      saveTask(formData)
+    },
+    [saveTask]
+  )
 
-    // Now debouncedUpdateTask will persist between renders, and debounced will act as a helper.
-    const debounceUpdateTask = useCallback(debounce((formdata: TypeTaskFormState) => {
-        updateTasks({id: itemId, data: formdata})
-    }, 444), [])
-    
-    useEffect(() => {
-        const {unsubscribe } = watch(formdata => {
-            if (itemId) {
-                debounceUpdateTask({
-                    ...formdata,
-                    priority: formdata.priority || undefined
-                })
-            } else {
-                debouncedCreateTask(formdata)
-            }
-        })
-        return () => {
-          unsubscribe()
-        }
-    }, [watch(),debounceUpdateTask, debouncedCreateTask ])
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>, formData: TypeTaskFormState) => {
+      if (e.key === "Enter") {
+        e.preventDefault()
+        saveTask(formData)
+      }
+    },
+    [saveTask]
+  )
 
+  return { handleBlur, handleKeyDown }
 }

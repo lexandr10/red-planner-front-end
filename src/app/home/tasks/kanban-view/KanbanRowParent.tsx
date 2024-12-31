@@ -20,9 +20,8 @@ interface IKanbanRowParent {
 
 
 const KanbanRowParent = ({ value, label, items, setItems }: IKanbanRowParent) => {
-    
-
-    return <Droppable droppableId={value}>
+	
+    return <Droppable droppableId={value} key={`droppable-${value}`}>
         {provided =>
             <div 
             ref={provided.innerRef}
@@ -48,7 +47,7 @@ const KanbanRowParent = ({ value, label, items, setItems }: IKanbanRowParent) =>
 							</div>}
 						</Draggable>)}
 					{provided.placeholder}
-					{value !== 'completed' && !items?.some(item => item.id) &&
+					{value !== 'completed' && !items?.some(item => !item.id) && 
 						<KanbanAddRowInput
 						setItems={setItems}
 						filterDate={FILTERS[value] ? FILTERS[value].format(): undefined}

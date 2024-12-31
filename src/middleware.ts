@@ -7,7 +7,7 @@ import { DASHBOARD_PAGES } from "./config/pages-url.config";
      
      const accessToken = cookies.get(EnumTokens.ACCESS_TOKEN)?.value
      const isAuthPage = url.includes('/auth')
-     console.log(cookies)
+     
   
      
      if (isAuthPage && accessToken) {

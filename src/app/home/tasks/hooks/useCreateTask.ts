@@ -9,7 +9,7 @@ export const useCreateTask = () => {
         mutationKey: ['task create'],
         mutationFn: (data: TypeTaskFormState) => taskService.createTask(data),
         onSuccess() {
-      querty.invalidateQueries({queryKey: ['task']})
+      querty.invalidateQueries({queryKey: ['tasks']})
         }
     })
     return {createTask}

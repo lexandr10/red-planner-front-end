@@ -1,7 +1,7 @@
 'use client'
 import { ITaskResponse } from "@/types/task.type"
 import { Dispatch, SetStateAction } from "react"
-import styles from "./Kanban.module.scss"
+
 
 interface IKanbanAddRowInput {
     filterDate?: string

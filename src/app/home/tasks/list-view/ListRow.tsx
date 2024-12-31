@@ -2,7 +2,7 @@
 import type { ITaskResponse, TypeTaskFormState } from "@/types/task.type"
 import type { Dispatch, SetStateAction } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { useTaskDebounce } from "../hooks/useTaskDebounce"
+import { useTaskHandler} from "../hooks/useTaskDebounce"
 import cn from 'clsx'
 import { GripVertical, Loader, Trash } from "lucide-react"
 import Checkbox from "@/components/checkbox/Checkbox"
@@ -19,7 +19,7 @@ interface IListRow {
 }
 
 const ListRow = ({ item, setItems }: IListRow) => {
-    const { register, control, watch } = useForm<TypeTaskFormState>({
+    const { register, control, watch, getValues } = useForm<TypeTaskFormState>({
         defaultValues: {
             name: item.name,
             isCompleted: item.isCompleted,
@@ -28,7 +28,7 @@ const ListRow = ({ item, setItems }: IListRow) => {
         }
     })
 
-    useTaskDebounce({ watch, itemId: item.id })
+   const {handleBlur, handleKeyDown} = useTaskHandler({itemId: item.id})
 
     const {deleteTask, isDeletePending} = useDeleteTask()
     
@@ -53,7 +53,16 @@ const ListRow = ({ item, setItems }: IListRow) => {
 						)}
                 />
                 
-                <TransparentField {...register('name')} />
+                <TransparentField onKeyDown={(e) => {
+                 if (e.key === "Enter") {
+            handleKeyDown(e, getValues()); 
+            (e.target as HTMLInputElement).blur(); 
+        }
+                }} {...register('name', {
+                    onBlur: () => {
+                        handleBlur(getValues())
+                      }
+                  })} />
             </span>
         </div>
         <div>
