@@ -28,7 +28,7 @@ const KanbanCard  = ({ item, setItems }: IKanbanCard ) => {
         }
     })
 
-    const { handleBlur, handleKeyDown} = useTaskHandler({itemId: item.id})
+    const { handleBlur, handleKeyDown} = useTaskHandler({itemId: item.id, watch})
 
     const {deleteTask, isDeletePending} = useDeleteTask()
     
@@ -53,7 +53,7 @@ const KanbanCard  = ({ item, setItems }: IKanbanCard ) => {
             <TransparentField onKeyDown={(e) => {
                  if (e.key === "Enter") {
             handleKeyDown(e, getValues()); 
-            (e.target as HTMLInputElement).blur(); 
+            (e.target as HTMLTextAreaElement).blur(); 
         }
                   }}  {...register('name', {
                 onBlur: () => {

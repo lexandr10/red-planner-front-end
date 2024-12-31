@@ -7,10 +7,11 @@ import { useUpdateTasks } from "./useUpdateTasks"
 import { TypeTaskFormState } from "@/types/task.type"
 
 interface IUseTaskDebounce {
-    itemId?: string
+  itemId?: string
+  watch: UseFormWatch<TypeTaskFormState>
 }
 
-export const useTaskHandler = ({ itemId }: IUseTaskDebounce) => {
+export const useTaskHandler = ({ itemId, watch }: IUseTaskDebounce) => {
   const { createTask } = useCreateTask()
   const { updateTasks } = useUpdateTasks()
 
@@ -25,6 +26,26 @@ export const useTaskHandler = ({ itemId }: IUseTaskDebounce) => {
     [itemId, createTask, updateTasks]
   )
 
+  const handlerUpdateTask = useCallback(debounce((formData: TypeTaskFormState) => {
+    if (itemId) {
+      updateTasks({id: itemId, data: formData})
+    }
+  }, 444), [])
+
+  useEffect(() => {
+    const { unsubscribe} = watch(formData => {
+      if (itemId) {
+        handlerUpdateTask({
+          ...formData,
+          priority: formData.priority || undefined
+        })
+      }
+    })
+    return () => {
+      unsubscribe()
+    }
+  },[watch(), handlerUpdateTask])
+
   
   const handleBlur = useCallback(
     (formData: TypeTaskFormState) => {
@@ -34,7 +55,7 @@ export const useTaskHandler = ({ itemId }: IUseTaskDebounce) => {
   )
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>, formData: TypeTaskFormState) => {
+    (e: React.KeyboardEvent<HTMLTextAreaElement>, formData: TypeTaskFormState) => {
       if (e.key === "Enter") {
         e.preventDefault()
         saveTask(formData)

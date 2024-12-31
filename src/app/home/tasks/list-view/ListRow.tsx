@@ -28,7 +28,7 @@ const ListRow = ({ item, setItems }: IListRow) => {
         }
     })
 
-   const {handleBlur, handleKeyDown} = useTaskHandler({itemId: item.id})
+   const {handleBlur, handleKeyDown} = useTaskHandler({itemId: item.id, watch})
 
     const {deleteTask, isDeletePending} = useDeleteTask()
     

@@ -7,8 +7,16 @@ import { DASHBOARD_PAGES } from "./config/pages-url.config";
      
      const accessToken = cookies.get(EnumTokens.ACCESS_TOKEN)?.value
      const isAuthPage = url.includes('/auth')
+     const pathname = request.nextUrl.pathname
+
+     const isRootURL = pathname === '/' || pathname === '';
      
-  
+     if (isRootURL) {
+    if (accessToken) {
+      return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, request.url));
+    }
+    return NextResponse.redirect(new URL('/auth', request.url));
+    }
      
      if (isAuthPage && accessToken) {
          return NextResponse.redirect(new URL(DASHBOARD_PAGES.HOME, url))
@@ -23,5 +31,5 @@ import { DASHBOARD_PAGES } from "./config/pages-url.config";
 }
 
 export const config = {
-    matcher: ['/home/:path*', '/auth/:path*']
+    matcher: ['/', '/home/:path*', '/auth/:path*']
 }
